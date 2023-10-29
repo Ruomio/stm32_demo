@@ -2,7 +2,7 @@
  * @Author: PapillonAz 1065940593@q.com
  * @Date: 2023-10-25 20:56:10
  * @LastEditors: PapillonAz 1065940593@q.com
- * @LastEditTime: 2023-10-26 17:53:01
+ * @LastEditTime: 2023-10-26 20:12:41
  * @FilePath: /IWDG_demo/src/main.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -42,9 +42,9 @@ int main(){
       */
     WWDG_Init(0x7f, 0x5f, WWDG_PRESCALER_8);
     while(1){
-        HAL_Delay(60);
+        HAL_Delay(90);  // 30 + 60 正好可以让两个喂狗都在窗口期内，也就是过了一个半周期
 
-        // HAL_WWDG_Refresh(&WWDG_HandleStruct);    // 在中断服务函数中喂狗，同样地效果
+        HAL_WWDG_Refresh(&WWDG_HandleStruct);    // 在中断服务函数中喂狗，同样地效果
     
         HAL_UART_Transmit(&huart1, "WWDG: 已经在窗口器内喂狗!\r\n", strlen("WWDG: 已经在窗口器内喂狗!\r\n"), 1000);
     }
