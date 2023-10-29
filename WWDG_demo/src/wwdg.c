@@ -2,7 +2,7 @@
  * @Author: PapillonAz 1065940593@q.com
  * @Date: 2023-10-26 16:11:30
  * @LastEditors: PapillonAz 1065940593@q.com
- * @LastEditTime: 2023-10-26 20:05:12
+ * @LastEditTime: 2023-10-29 15:43:40
  * @FilePath: /WWDG_demo/src/wwdg.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -31,10 +31,8 @@ void HAL_WWDG_MspInit(WWDG_HandleTypeDef *hwwdg){
     HAL_NVIC_EnableIRQ(WWDG_IRQn);
 }
 
-/* 中断服务函数 */
-void WWDG_IRQHandler(){
-    HAL_WWDG_IRQHandler(&WWDG_HandleStruct);
-}
+/* 中断服务函数 写在 it.c中 */
+
 
 /* 提前唤醒函数  递减到0x40(64时产生中断) */
 void HAL_WWDG_EarlyWakeupCallback(WWDG_HandleTypeDef *hwwdg){

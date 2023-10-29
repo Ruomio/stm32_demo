@@ -22,7 +22,7 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "wwdg.h"
+#include "tim.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -192,6 +192,16 @@ void SysTick_Handler(void)
   /* USER CODE END SysTick_IRQn 1 */
 }
 
+/* USER CODE BEGIN 1 */
+void Error_Handler(void){
+    __disable_irq();
+    while (1)
+    {
+        
+    }
+}
+/* USER CODE END 1 */
+
 /******************************************************************************/
 /* STM32F1xx Peripheral Interrupt Handlers                                    */
 /* Add here the Interrupt Handlers for the used peripherals.                  */
@@ -213,17 +223,10 @@ void USART1_IRQHandler(void)
   /* USER CODE END USART1_IRQn 1 */
 }
 
-/* USER CODE BEGIN 1 */
-void Error_Handler(void){
-    __disable_irq();
-    while (1)
-    {
-        
-    }
-}
-/* USER CODE END 1 */
 
-/* WWDG 中断 */
-void WWDG_IRQHandler(){
-    HAL_WWDG_IRQHandler(&WWDG_HandleStruct);
+
+void TIM2_IQRHandler(void){
+  
+  HAL_TIM_IRQHandler(&tim_HandleX);
+
 }

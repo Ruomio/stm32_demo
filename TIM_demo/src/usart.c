@@ -2,7 +2,7 @@
  * @Author: PapillonAz 1065940593@q.com
  * @Date: 2023-10-25 22:34:39
  * @LastEditors: PapillonAz 1065940593@q.com
- * @LastEditTime: 2023-10-29 15:44:29
+ * @LastEditTime: 2023-10-29 15:40:57
  * @FilePath: /IWDG_demo/src/uart.c
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -58,3 +58,6 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle){
         HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9 | GPIO_PIN_10);
     }
 }
+
+// 中断在it.c 中
+

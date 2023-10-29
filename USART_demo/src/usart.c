@@ -53,7 +53,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef *uartHandle){
 
 void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle){
 
-    if(uartHandle->Instance = USART1){
+    if(uartHandle->Instance == USART1){
         __HAL_RCC_USART1_CLK_DISABLE();
         HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9 | GPIO_PIN_10);
     }
