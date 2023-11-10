@@ -10,34 +10,31 @@
 
 TIM_HandleTypeDef tim_HandleX;
 
-void TIM_BASE_Init(uint16_t prelod, uint16_t psc, uint16_t period){
+void TIM_GENERAL_Init(uint16_t psc, uint16_t period){
     
+    
+
     tim_HandleX.Instance = TIM2;
     tim_HandleX.Init.CounterMode = TIM_COUNTERMODE_UP;
-    tim_HandleX.Init.AutoReloadPreload = prelod;
     tim_HandleX.Init.Prescaler = psc;
     tim_HandleX.Init.Period = period;
+    tim_HandleX.Init.ClockDivision = TIM_CLOCKPRESCALER_DIV1;
 
     HAL_TIM_Base_Init(&tim_HandleX);
 
-    HAL_TIM_Base_Start(&tim_HandleX);
+    __HAL_RCC_TIM2_CLK_ENABLE();
+    HAL_NVIC_SetPriority(TIM2_IRQn, 8, 0);
+    HAL_NVIC_EnableIRQ(TIM2_IRQn);
+
+    HAL_TIM_Base_Start_IT(&tim_HandleX);
 }
 
-void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim){
-    if(htim->Instance == TIM2){
-        __HAL_RCC_TIM2_CLK_ENABLE();
-        HAL_NVIC_SetPriority(TIM2_IRQn, 8, 0);
-        HAL_NVIC_EnableIRQ(TIM2_IRQn);
-    }
-}
 
 /* 中断写到了 it.c 中 */
 
-/* 回调函数 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-    if(htim->Instance == TIM2){
-        
+// 回调
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+    if( htim->Instance == &tim_HandleX) {
         HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-
     }
 }

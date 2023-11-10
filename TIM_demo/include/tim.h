@@ -5,6 +5,6 @@
 
 extern TIM_HandleTypeDef tim_HandleX;
 
-void TIM_BASE_Init(uint16_t prelod, uint16_t psc, uint16_t period);
+void TIM_GENERAL_Init(uint16_t psc, uint16_t period);
 
 #endif

@@ -38,4 +38,5 @@ void HAL_WWDG_MspInit(WWDG_HandleTypeDef *hwwdg){
 void HAL_WWDG_EarlyWakeupCallback(WWDG_HandleTypeDef *hwwdg){
     HAL_WWDG_Refresh(&WWDG_HandleStruct);
     HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+    HAL_UART_Transmit(&huart1, "WWDG:进入提前唤醒回调函数!\r\n", strlen("WWDG:进入提前唤醒回调函数!\r\n"), 1000);
 }

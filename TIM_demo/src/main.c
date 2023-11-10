@@ -23,16 +23,10 @@ int main(){
     // 外设
     GPIO_Init();
     USART1_UART_Init();
-
-    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, RESET);
-
-    uint8_t mess[] = "请喂狗!\r\n";
-    HAL_UART_Transmit(&huart1, mess, sizeof(mess), 1000);
     
+    TIM_GENERAL_Init(7200-1, 5000-1);
     while(1){
-        HAL_Delay(950);
-        uint8_t mess2[] = "已经喂狗!\r\n";
-        HAL_UART_Transmit(&huart1, mess2, sizeof(mess2), 1000);
-        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+        // HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+        HAL_Delay(200);
     }
 }
