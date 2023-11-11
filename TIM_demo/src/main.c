@@ -24,9 +24,14 @@ int main(){
     GPIO_Init();
     USART1_UART_Init();
     
-    TIM_GENERAL_Init(7200-1, 5000-1);
+    // T = 1
+    TIM_GENERAL_Init(71, 10000-1);
+
+
     while(1){
         // HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-        HAL_Delay(200);
+        // HAL_Delay(1000);
     }
 }
+
+
