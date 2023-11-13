@@ -40,13 +40,22 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim) {
 /* 中断写到了 it.c 中 */
 
 // 回调
-
+uint8_t cnt = 0;
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if( htim->Instance == TIM2) {
         
         if( __HAL_TIM_GET_ITSTATUS(&tim_HandleX, TIM_IT_UPDATE) == SET) {
             __HAL_TIM_CLEAR_IT(&tim_HandleX, TIM_IT_UPDATE);
-            HAL_UART_Transmit(&huart1, "程序进入回调!!\r\n", strlen("程序进入回调!!\r\n"), 100);
+            HAL_UART_Transmit(&huart1, "程序进入回调!!\r\n", strlen("程序进入回调!!\r\n"), 20);
+
+            cnt++;
+            if(cnt > 50 ) {
+                HAL_UART_Transmit(&huart1, "反转led!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\r\n", strlen("反转led!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\r\n"),20);
+                HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+                cnt = 0;
+            }
+
+            
         }
     }
 }

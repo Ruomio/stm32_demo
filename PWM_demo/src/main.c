@@ -39,6 +39,6 @@ int main(){
 
         if(led_rpm_val > 300) dir=0;
         if(led_rpm_val == 0) dir=1;
-        __HAL_TIM_SET_COMPARE(&g_timx_pwm_chy_handle, TIM_CHANNEL_2, led_rpm_val);
+        __HAL_TIM_SET_COMPARE(&g_timx_pwm_chy_handle, TIM_CHANNEL_1, led_rpm_val);
     }
 }

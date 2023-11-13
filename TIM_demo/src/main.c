@@ -25,7 +25,7 @@ int main(){
     USART1_UART_Init();
     
     // T = 1
-    TIM_GENERAL_Init(71, 10000-1);
+    TIM_GENERAL_Init(72-1, 10000-1);
 
 
     while(1){
