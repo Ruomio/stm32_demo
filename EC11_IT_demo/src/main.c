@@ -5,62 +5,62 @@
  * @brief          : Main program body
  ******************************************************************************
  * @attention
-*/
+ *
+ * Copyright (c) 2023 STMicroelectronics.
+ * All rights reserved.
+ *
+
+/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "i2c.h"
 #include "usart.h"
 #include "gpio.h"
 #include "oled.h"
-
-extern uint8_t htimx_cap_sta;
-extern uint16_t htimx_cap_val;
+#include "sys.h"
+#include "encoder.h"
 
 uint8_t Receive[1];
 
 void SystemClock_Config(void);
 
+int encoder_cnt=0;
+
+/* USER CODE END 0 */
+
+/**
+ * @brief  The application entry point.
+ * @retval int
+ */
 int main(void)
 {
-    
     HAL_Init();
+
     SystemClock_Config();
 
     MX_GPIO_Init();
     MX_I2C1_Init();
     MX_USART1_UART_Init();
+    
 
     HAL_Delay(20);
     OLED_Init();
+    //  OLED_Test();
+    Encoder_Init();
+
+    HAL_UART_Receive_IT(&huart1, Receive, sizeof(Receive));
+
+    printf("Program running,%s !\r\n", "Papillon");
 
 
-    // HAL_UART_Receive_IT(&huart1, Receive, sizeof(Receive));
-    // OLED_PrintASCIIString(0, 0, "HelloWorld!", &afont12x6, OLED_COLOR_NORMAL);
-    // OLED_ShowFrame();
-    printf("Program running, %s!\r\n", "papillon");
 
-    gtimx_Init(71, 0xffff);
-
-    uint32_t temp = 0;
-    uint16_t cnt = 0;
     while (1)
     {
-        HAL_Delay(20);
-        if(htimx_cap_sta & 0x80) {          // 捕获到上升脉宽
-            temp = htimx_cap_sta & 0x3f;
-            temp *= 65536;
-            temp += htimx_cap_val;
-            printf("High:%d us\r\n", temp);
-            htimx_cap_sta = 0;              // 开启下一次捕获
-            htimx_cap_val = 0;
-        }
+        // HAL_Delay(20);
+
+        printf("NUM:%5d\r\n", encoder_cnt);
         
-        cnt++;
-        if(cnt > 20) {
-            HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-            cnt = 0;
-        }
     }
-    
+    /* USER CODE END 3 */
 }
 
 /**
@@ -136,3 +136,15 @@ void assert_failed(uint8_t *file, uint32_t line)
     /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
+
+
+void delay_ms(uint16_t time)
+{    
+   uint16_t i=0;  
+   while(time--)
+   {
+      i=12000;  //自己定义
+      while(i--) ;    
+   }
+}
