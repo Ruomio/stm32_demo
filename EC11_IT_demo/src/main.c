@@ -9,8 +9,8 @@
  * Copyright (c) 2023 STMicroelectronics.
  * All rights reserved.
  *
-
-/* Includes ------------------------------------------------------------------*/
+ * Includes ------------------------------------------------------------------
+ */
 #include "main.h"
 #include "i2c.h"
 #include "usart.h"
@@ -25,7 +25,6 @@ void SystemClock_Config(void);
 
 int encoder_cnt=0;
 
-/* USER CODE END 0 */
 
 /**
  * @brief  The application entry point.
