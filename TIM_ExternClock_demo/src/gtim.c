@@ -11,6 +11,8 @@ void gtimx_Init(uint8_t psc, uint16_t arr) {
     // htimx.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
     HAL_TIM_IC_Init(&htimx);
 
+    // HAL_TIM_SlaveConfigSynchro();
+
 
     TIM_IC_InitTypeDef timx_ic = {0};
     timx_ic.ICPolarity = TIM_ICPOLARITY_RISING;          // 上升沿捕获
@@ -26,11 +28,11 @@ void gtimx_Init(uint8_t psc, uint16_t arr) {
 void HAL_TIM_IC_MspInit(TIM_HandleTypeDef *htim) {
     if(htim->Instance == TIM2) {
         __HAL_RCC_TIM2_CLK_ENABLE();
-        __HAL_RCC_GPIOB_CLK_ENABLE();
+        __HAL_RCC_GPIOA_CLK_ENABLE();
 
         // 捕获 GPIOB_11  <-->  TIM2 CH4  重定义引脚
         GPIO_InitTypeDef gpiox = {0};
-        gpiox.Pin = GPIO_PIN_11;
+        gpiox.Pin = GPIO_PIN_0;
         gpiox.Mode = GPIO_MODE_AF_PP;
         gpiox.Pull = GPIO_PULLDOWN;
         gpiox.Speed = GPIO_SPEED_FREQ_HIGH;

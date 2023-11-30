@@ -6,11 +6,16 @@
  ******************************************************************************
  * @attention
 */
+#include <stdio.h>
+
 #include "main.h"
 #include "i2c.h"
 #include "usart.h"
 #include "gpio.h"
 #include "oled.h"
+#include "adc.h"
+
+
 
 extern uint8_t htimx_cap_sta;
 extern uint16_t htimx_cap_val;
@@ -32,35 +37,32 @@ int main(void)
     HAL_Delay(20);
     OLED_Init();
 
+    ADC_Init();
+
 
     // HAL_UART_Receive_IT(&huart1, Receive, sizeof(Receive));
     // OLED_PrintASCIIString(0, 0, "HelloWorld!", &afont12x6, OLED_COLOR_NORMAL);
     // OLED_ShowFrame();
-    printf("Program running, %s!\r\n", "papillon");
+    printf("%d,%dProgram running, %s!\r\n", 0,0,"papillon");
 
-    gtimx_Init(71, 0xffff);
+    // gtimx_Init(71, 0xffff);
 
-    uint32_t temp = 0;
-    uint32_t max = 0;
-    uint16_t cnt = 0;
+    uint16_t adcx = 0;
+    float temp = 0;
+
     while (1)
     {
-        HAL_Delay(20);
-        if(htimx_cap_sta & 0x80) {          // 捕获到上升脉宽
-            temp = htimx_cap_sta & 0x3f;
-            temp *= 65536;
-            temp += htimx_cap_val;
-            if(temp > max) max = temp;
-            printf("High:%ld us\r\n", max);
-            htimx_cap_sta = 0;              // 开启下一次捕获
-            htimx_cap_val = 0;
-        }
+        HAL_Delay(500);
+        adcx = ADC_get_value();
+        printf("%d,%dADC Value: %d!\r\n", 0, 1, (int)adcx);
+        // printf("%d,%dProgram running, %s!\r\n", 0,1,"Ruomio");
         
-        cnt++;
-        if(cnt > 20) {
-            HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-            cnt = 0;
-        }
+        temp = (float)adcx * (3.3/4095);
+
+        int integer = temp; // 整数部分
+        temp -= integer;
+        temp *= 1000;
+        printf("%d,%dVOL Value: %d.%d!\r\n", 0,2, integer, (int)temp);
     }
     
 }
