@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "system_clock.h": "c",
+        "main.h": "c",
+        "systick.h": "c",
+        "ov7670.h": "c"
+    }
+}
